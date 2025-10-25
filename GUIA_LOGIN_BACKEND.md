@@ -9,15 +9,17 @@ La aplicación está configurada para funcionar con un **backend real** en `/api
 ## 🔐 Credenciales de Prueba
 
 ### Con Mock Backend (desarrollo sin backend)
+
 ```
 Email: user@demo.com
 Password: 123456
 
-Email: admin@demo.com  
+Email: admin@demo.com
 Password: admin123
 ```
 
 ### Con Backend Real
+
 Usa las credenciales que proporcione tu backend.
 
 ---
@@ -25,6 +27,7 @@ Usa las credenciales que proporcione tu backend.
 ## 🚀 Modo 1: Desarrollo CON Backend Real
 
 ### Configuración
+
 1. **Descomenta** las líneas del Mock Backend en `app.config.ts`
 2. Asegúrate de que tu backend esté corriendo
 3. El backend debe responder en `/api/login` con esta estructura:
@@ -56,6 +59,7 @@ POST /api/login
 ```
 
 ### Flujo de Autenticación
+
 1. Usuario ingresa credenciales en `/auth/sign-in`
 2. Se dispara acción NgRx `login`
 3. `AuthenticationService` hace POST a `/api/login`
@@ -78,7 +82,7 @@ POST /api/login
 // import { MockBackendInterceptor } from './core/interceptors/mock-backend.interceptor';
 
 // DESPUÉS (descomentado)
-import { MockBackendInterceptor } from './core/interceptors/mock-backend.interceptor';
+import { MockBackendInterceptor } from "./core/interceptors/mock-backend.interceptor";
 ```
 
 ```typescript
@@ -90,6 +94,7 @@ import { MockBackendInterceptor } from './core/interceptors/mock-backend.interce
 ```
 
 **3. Reiniciar el servidor de desarrollo:**
+
 ```bash
 # Detener el servidor (Ctrl+C)
 npm run start
@@ -112,6 +117,7 @@ El `MockBackendInterceptor` intercepta todas las llamadas a `/api/*` y:
    - Las deja pasar sin interceptar
 
 ### Credenciales Mock
+
 ```typescript
 // Válidas
 user@demo.com / 123456
@@ -132,13 +138,13 @@ El `authGuard` en `src/app/core/guards/auth.guard.ts`:
 ```typescript
 export const authGuard = (url: any) => {
   const authService = inject(AuthenticationService);
-  
+
   // Verifica si existe cookie de sesión
   if (!authService.session) {
     // No hay sesión → Redirige a login
-    return router.createUrlTree(['/auth/login']);
+    return router.createUrlTree(["/auth/login"]);
   }
-  
+
   // Hay sesión → Permite acceso
   return true;
 };
@@ -177,16 +183,18 @@ Todas las rutas bajo `/dashboard` están protegidas:
 ### Error: "Cannot read properties of undefined (reading 'message')"
 
 **✅ SOLUCIONADO**: Se corrigió el manejo de errores en:
+
 - `sign-in.component.ts` (línea 56)
 - `error.interceptor.ts` (línea 15)
 
 Ahora usa **optional chaining** (`?.`) para evitar estos errores:
+
 ```typescript
 // Antes
 this.errorMessage = data.error.message;
 
 // Después
-this.errorMessage = data?.error?.message || 'Error de conexión';
+this.errorMessage = data?.error?.message || "Error de conexión";
 ```
 
 ### Error 404: POST http://localhost:4200/api/login
@@ -194,6 +202,7 @@ this.errorMessage = data?.error?.message || 'Error de conexión';
 **Causa**: No hay backend disponible.
 
 **Soluciones**:
+
 1. **Activar Mock Backend** (ver sección "Modo 2")
 2. **Configurar proxy** a backend real (ver sección siguiente)
 3. **Levantar backend** en el puerto esperado
@@ -201,6 +210,7 @@ this.errorMessage = data?.error?.message || 'Error de conexión';
 ### No puedo hacer login
 
 **Verifica**:
+
 1. ¿Está el Mock Backend activado en `app.config.ts`?
 2. ¿Estás usando credenciales válidas?
 3. ¿Hay errores en la consola del navegador?
@@ -213,6 +223,7 @@ this.errorMessage = data?.error?.message || 'Error de conexión';
 Si tu backend está en otro puerto (ej: `http://localhost:3000`):
 
 **1. Crear `proxy.conf.json`:**
+
 ```json
 {
   "/api": {
@@ -225,6 +236,7 @@ Si tu backend está en otro puerto (ej: `http://localhost:3000`):
 ```
 
 **2. Actualizar `package.json`:**
+
 ```json
 {
   "scripts": {
@@ -234,6 +246,7 @@ Si tu backend está en otro puerto (ej: `http://localhost:3000`):
 ```
 
 **3. Reiniciar servidor:**
+
 ```bash
 npm run start
 ```
@@ -304,6 +317,7 @@ Ahora todas las llamadas a `/api/*` se redirigirán a `http://localhost:3000/api
 ## ✅ Checklist de Desarrollo
 
 ### Sin Backend (Mock)
+
 - [x] Corregir manejo de errores
 - [x] Crear MockBackendInterceptor
 - [x] Documentar credenciales mock
@@ -314,6 +328,7 @@ Ahora todas las llamadas a `/api/*` se redirigirán a `http://localhost:3000/api
 - [ ] Verificar guard en rutas protegidas
 
 ### Con Backend
+
 - [x] Corregir manejo de errores
 - [ ] Levantar backend
 - [ ] Configurar proxy (si es necesario)
@@ -327,14 +342,14 @@ Ahora todas las llamadas a `/api/*` se redirigirán a `http://localhost:3000/api
 
 ## 🎯 Resumen
 
-| Aspecto | Sin Backend (Mock) | Con Backend Real |
-|---------|-------------------|------------------|
-| **Interceptor** | `MockBackendInterceptor` activado | `MockBackendInterceptor` desactivado |
-| **Credenciales** | user@demo.com / 123456 | Las de tu backend |
-| **Token** | Fake (mock-jwt-token-xxx) | JWT real del backend |
-| **Validación** | Hardcoded en interceptor | Validación real en DB |
-| **Latencia** | Simulada (500ms) | Real |
-| **Desarrollo** | ✅ Ideal sin backend | ✅ Para producción |
+| Aspecto          | Sin Backend (Mock)                | Con Backend Real                     |
+| ---------------- | --------------------------------- | ------------------------------------ |
+| **Interceptor**  | `MockBackendInterceptor` activado | `MockBackendInterceptor` desactivado |
+| **Credenciales** | user@demo.com / 123456            | Las de tu backend                    |
+| **Token**        | Fake (mock-jwt-token-xxx)         | JWT real del backend                 |
+| **Validación**   | Hardcoded en interceptor          | Validación real en DB                |
+| **Latencia**     | Simulada (500ms)                  | Real                                 |
+| **Desarrollo**   | ✅ Ideal sin backend              | ✅ Para producción                   |
 
 ---
 

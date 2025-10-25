@@ -157,12 +157,10 @@ export class TableService<T extends {}> {
       this._state;
     const searchableFields = Object.keys(this.items[0]) as (keyof T)[];
 
-    // filter
     let filteredItems = this.items.filter((item) =>
       matches(item, searchTerm, searchableFields),
     );
 
-    // Sort
     if (sortColumn) {
       filteredItems = [...filteredItems].sort((a, b) => {
         const res = compare(a[sortColumn], b[sortColumn]);
@@ -172,7 +170,6 @@ export class TableService<T extends {}> {
 
     const total = filteredItems.length;
 
-    // Paginate the items
     this.startIndex = (page - 1) * pageSize;
     this.endIndex = this.startIndex + pageSize;
     const paginatedItems = filteredItems.slice(this.startIndex, this.endIndex);

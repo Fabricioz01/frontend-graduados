@@ -108,11 +108,6 @@ export class SidebarComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /**
-   * toggles open menu
-   * @param menuItem clicked menuitem
-   * @param collapse collpase instance
-   */
   toggleMenuItem(menuItem: MenuItemType, collapse: NgbCollapse): void {
     collapse.toggle();
     let openMenuItems: string[];

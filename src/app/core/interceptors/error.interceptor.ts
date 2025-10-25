@@ -27,9 +27,14 @@ export class ErrorInterceptor implements HttpInterceptor {
           window.location.reload();
         }
 
-        // Manejo seguro de errores con verificación de estructura
-        const error = err?.error?.message || err?.statusText || 'Error de conexión con el servidor';
-        return throwError(() => ({ error: { message: error }, status: err.status }));
+        const error =
+          err?.error?.message ||
+          err?.statusText ||
+          'Error de conexión con el servidor';
+        return throwError(() => ({
+          error: { message: error },
+          status: err.status,
+        }));
       }),
     );
   }

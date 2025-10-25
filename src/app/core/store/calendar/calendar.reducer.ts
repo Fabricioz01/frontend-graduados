@@ -51,7 +51,6 @@ export const calendarReducer = createReducer(
   })
 )
 
-// Selector
 export function reducer(state: CalendarState | undefined, action: Action) {
   return calendarReducer(state, action)
 }

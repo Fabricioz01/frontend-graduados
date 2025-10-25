@@ -8,14 +8,14 @@ import { inject } from '@angular/core';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard', // ← Redirige a /dashboard que luego va a /dashboard/index
+    redirectTo: 'dashboard',
     pathMatch: 'full',
   },
   {
     path: '',
     component: LayoutComponent,
     // ⚠️ DESARROLLO: canActivate desactivado temporalmente para testing
-    // canActivate: [...], 
+    // canActivate: [...],
     // TODO: Descomentar cuando conectes el backend real
     children: [
       {

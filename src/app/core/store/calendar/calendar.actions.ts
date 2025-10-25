@@ -24,7 +24,6 @@ export const addEventFailure = createAction(
   props<{ error: string }>()
 )
 
-// Add Data
 export const addCalendar = createAction(
   '[Data] Add Calendar',
   props<{ events: EventInput }>()
@@ -38,7 +37,6 @@ export const addCalendarFailure = createAction(
   props<{ error: string }>()
 )
 
-// Update Data
 export const updateCalendar = createAction(
   '[Data] Update calendar event',
   props<{ events: EventInput }>()
@@ -52,7 +50,6 @@ export const updateCalendarFailure = createAction(
   props<{ error: string }>()
 )
 
-// Delete Data
 export const deleteCalendar = createAction(
   '[Data] Delete Calendar',
   props<{ id: string }>()

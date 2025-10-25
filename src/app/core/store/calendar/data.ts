@@ -63,7 +63,6 @@ const defaultEvents: EventInput[] = [
   },
 ]
 
-// external events
 const externalEvents: externalModel[] = [
   {
     id: 1,

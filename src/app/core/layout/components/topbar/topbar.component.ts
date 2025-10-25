@@ -33,7 +33,6 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 export class TopbarComponent {
   isSidebarVisible = true;
   isFullscreen: boolean = false;
-  // private theme: string = 'light';
   private config = { theme: 'light' };
   constructor(
     private renderer: Renderer2,

@@ -5,7 +5,7 @@ import { AuthenticationService } from '../services/api/auth.service';
 export const authGuard = (url: any) => {
   // ⚠️ DESARROLLO: Guard desactivado temporalmente para testing
   // Permite acceso sin autenticación
-  
+
   // TODO: Descomentar cuando conectes el backend real
   /*
   const router = inject(Router);

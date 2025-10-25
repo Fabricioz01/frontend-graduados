@@ -8,9 +8,6 @@ import { defaultEvents } from '../../store/calendar/data';
 export class CrudService {
   constructor() {}
 
-  /***
-   * Get
-   */
   fetchCalendarEvents(): Observable<EventInput[]> {
     return of(defaultEvents);
   }

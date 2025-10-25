@@ -47,14 +47,14 @@ export class SignInComponent {
     if (this.signInForm.valid) {
       // ⚠️ DESARROLLO: Login desactivado temporalmente para testing
       // Redirige directamente al dashboard sin autenticación
-      
+
       console.log('🔧 Modo desarrollo: Login bypass activado');
       console.log('📧 Email:', this.formValues['email'].value);
       console.log('🔑 Password:', this.formValues['password'].value);
-      
+
       // Simular que el login fue exitoso y redirigir
       window.location.href = '/dashboard/index';
-      
+
       // TODO: Descomentar cuando conectes el backend real
       /*
       const email = this.formValues['email'].value;
