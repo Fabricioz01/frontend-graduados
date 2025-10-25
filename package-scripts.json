@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "verify-structure": "echo 'Verificando estructura de archivos...' && dir src\\app\\core && dir src\\app\\features && dir src\\app\\shared",
+    "clean-old-structure": "echo '⚠️  ADVERTENCIA: Esto eliminará las carpetas antiguas' && echo 'Presione Ctrl+C para cancelar o espere 5 segundos...' && timeout /t 5 && rmdir /s /q src\\app\\views src\\app\\common src\\app\\helper src\\app\\services src\\app\\store src\\app\\components src\\app\\layout src\\app\\auth-layout src\\app\\error-layout && echo '✅ Carpetas antiguas eliminadas'",
+    "check-compilation": "ng build --configuration development --no-progress"
+  }
+}

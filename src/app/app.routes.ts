@@ -1,48 +1,49 @@
-import { Router, Routes } from '@angular/router'
-import { LayoutComponent } from './layout/layout.component'
-import { AuthLayoutComponent } from './auth-layout/auth-layout.component'
-import { EmailVerifivationComponent } from '@views/auth/email-verifivation/email-verifivation.component'
-import { ErrorLayoutComponent } from './error-layout/error-layout.component'
-import { AuthenticationService } from './services/auth.service'
-import { inject } from '@angular/core'
+import { Router, Routes } from '@angular/router';
+import { LayoutComponent } from './core/layout/layout.component';
+import { AuthLayoutComponent } from './core/auth-layout/auth-layout.component';
+import { ErrorLayoutComponent } from './core/error-layout/error-layout.component';
+import { AuthenticationService } from './core/services/api/auth.service';
+import { inject } from '@angular/core';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'index',
+    redirectTo: 'dashboard', // ← Redirige a /dashboard que luego va a /dashboard/index
     pathMatch: 'full',
   },
   {
     path: '',
     component: LayoutComponent,
-    loadChildren: () =>
-      import('./views/views.route').then((mod) => mod.VIEWS_ROUTES),
-    canActivate: [
-      (url: any) => {
-        const router = inject(Router)
-        const authService = inject(AuthenticationService)
-        if (!authService.session) {
-          return router.createUrlTree(['/auth/login'], {
-            queryParams: { returnUrl: url._routerState.url },
-          })
-        }
-        return true
-      }
-    ]
+    // ⚠️ DESARROLLO: canActivate desactivado temporalmente para testing
+    // canActivate: [...], 
+    // TODO: Descomentar cuando conectes el backend real
+    children: [
+      {
+        path: 'dashboard',
+        loadChildren: () =>
+          import('./features/dashboard/dashboard.routes').then(
+            (m) => m.DASHBOARD_ROUTES,
+          ),
+      },
+      {
+        path: 'gestion-usuarios',
+        loadChildren: () =>
+          import('./features/gestion-usuarios/gestion-usuarios.routes').then(
+            (m) => m.GESTION_USUARIOS_ROUTES,
+          ),
+      },
+    ],
   },
-
   {
-    path: '',
+    path: 'auth',
     component: AuthLayoutComponent,
     loadChildren: () =>
-      import('./views/auth/auth.route').then((mod) => mod.AUTH_ROUTES),
+      import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES),
   },
   {
     path: '',
     component: ErrorLayoutComponent,
     loadChildren: () =>
-      import('./views/errors/error.route').then(
-        (mod) => mod.ERROR_PAGES_ROUTES
-      ),
-  }
-]
+      import('./features/errors/errors.routes').then((m) => m.ERROR_ROUTES),
+  },
+];
